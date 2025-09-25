@@ -19,7 +19,7 @@ interface MobileFullPlayerProps {
 }
 
 export default function MobileFullPlayer({ track, isPlaying, onClose }: MobileFullPlayerProps) {
-  const { playTrack, togglePlay, playNext, playPrevious } = usePlayer();
+  const { currentTrack, playTrack, togglePlay, playNext, playPrevious } = usePlayer();
   const [progress, setProgress] = useState(0);
 
   // Reset progress when track changes
