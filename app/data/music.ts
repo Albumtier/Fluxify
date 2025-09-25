@@ -16,6 +16,7 @@ export type Release = {
   type: "Single" | "Album";
   slug: string;
   tracks: Track[];
+  artist?: string; // optional
 };
 
 // Default artist
@@ -41,6 +42,7 @@ export const latestRelease: Release = {
   year: 2025,
   type: "Single",
   slug: "healing-hurts",
+  artist: "David",
   tracks: withDefaults([
     { id: "healing-hurts", title: "Healing Hurts", file: "/music/healing-hurts.mp3", duration: 208 },
   ], "/images/healing-hurts.jpg"),
@@ -52,6 +54,7 @@ export const musingsAlbum: Release = {
   year: 2025,
   type: "Album",
   slug: "musings",
+  artist: "David",
   tracks: withDefaults([
     { id: 1, title: "Musings", file: "/music/01-musings.mp3", duration: 209 },
     { id: 2, title: "Love Comes, Love Goes", file: "/music/02-love-comes-love-goes.mp3", duration: 163 },
@@ -73,6 +76,7 @@ export const didYou: Release = {
   year: 2025,
   type: "Single",
   slug: "did-you",
+  artist: "David",
   tracks: withDefaults([
     { id: "did-you", title: "Did You?", file: "/music/did-you.mp3", duration: 165 },
   ], "/images/did-you.jpg"),
@@ -84,6 +88,7 @@ export const rud1: Release = {
   year: 2025,
   type: "Single",
   slug: "rud1",
+  artist: "David",
   tracks: withDefaults([
     { id: "rud1", title: "R-U-D-1?", file: "/music/rud1.mp3", duration: 238 },
   ], "/images/rud1.jpg"),
