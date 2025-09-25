@@ -104,7 +104,7 @@ export default function MobileFullPlayer({ track, isPlaying, onClose }: MobileFu
             <FaStepBackward />
           </button>
           <button
-            onClick={() => (isPlaying ? togglePlay() : playTrack(track))}
+            onClick={() => (isPlaying ? togglePlay() : currentTrack ? playTrack(currentTrack) : null)}
             className="p-5 bg-pink-600 rounded-full text-3xl"
           >
             {isPlaying ? <FaPause /> : <FaPlay />}
