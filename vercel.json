@@ -1,7 +1,10 @@
 {
   "build": {
-    "env": {
-      "NPM_FLAGS": "--legacy-peer-deps"
+    "env": {},
+    "builder": "npm",
+    "commands": {
+      "install": "npm install --legacy-peer-deps",
+      "build": "npm run build"
     }
   }
 }
