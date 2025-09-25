@@ -38,17 +38,17 @@ export const musingsAlbum = {
   type: "Album",
   slug: "musings", // ✅ this must match the URL
   tracks: [
-    { id: 1, title: "Musings", file: "/music/01-musings.mp3", cover: "/images/musings.jpg", duration: 209 },
-    { id: 2, title: "Love Comes, Love Goes", file: "/music/02-love-comes-love-goes.mp3", cover: "/images/musings.jpg", duration: 163 },
-    { id: 3, title: "Let You Go", file: "/music/03-let-you-go.mp3", cover: "/images/musings.jpg", duration: 144 },
-    { id: 4, title: "I Hope You Know Love", file: "/music/04-i-hope-you-know-love.mp3", cover: "/images/musings.jpg", duration: 225 },
-    { id: 5, title: "Drowning", file: "/music/05-drowning.mp3", cover: "/images/musings.jpg", duration: 219 },
-    { id: 6, title: "Get Over You", file: "/music/06-get-over-you.mp3", cover: "/images/musings.jpg", duration: 195 },
-    { id: 7, title: "Solo Tú", file: "/music/07-solo-tu.mp3", cover: "/images/musings.jpg", duration: 151 },
-    { id: 8, title: "One Request", file: "/music/08-one-request.mp3", cover: "/images/musings.jpg", duration: 141 },
-    { id: 9, title: "Musings (slowed + reverb)", file: "/music/09-musings-slowed-reverb.mp3", cover: "/images/musings.jpg", duration: 241 },
-    { id: 10, title: "Love Comes, Love Goes (stripped)", file: "/music/10-love-comes-love-goes-stripped.mp3", cover: "/images/musings.jpg", duration: 154 },
-    { id: 11, title: "Love Comes, Love Goes (stripped + slowed + reverb)", file: "/music/11-love-comes-love-goes-stripped-slowed-reverb.mp3", cover: "/images/musings.jpg", duration: 181 },
+    { id: "1", title: "Musings", file: "/music/01-musings.mp3", cover: "/images/musings.jpg", duration: 209 },
+    { id: "2", title: "Love Comes, Love Goes", file: "/music/02-love-comes-love-goes.mp3", cover: "/images/musings.jpg", duration: 163 },
+    { id: "3", title: "Let You Go", file: "/music/03-let-you-go.mp3", cover: "/images/musings.jpg", duration: 144 },
+    { id: "4", title: "I Hope You Know Love", file: "/music/04-i-hope-you-know-love.mp3", cover: "/images/musings.jpg", duration: 225 },
+    { id: "5", title: "Drowning", file: "/music/05-drowning.mp3", cover: "/images/musings.jpg", duration: 219 },
+    { id: "6", title: "Get Over You", file: "/music/06-get-over-you.mp3", cover: "/images/musings.jpg", duration: 195 },
+    { id: "7", title: "Solo Tú", file: "/music/07-solo-tu.mp3", cover: "/images/musings.jpg", duration: 151 },
+    { id: "8", title: "One Request", file: "/music/08-one-request.mp3", cover: "/images/musings.jpg", duration: 141 },
+    { id: "9", title: "Musings (slowed + reverb)", file: "/music/09-musings-slowed-reverb.mp3", cover: "/images/musings.jpg", duration: 241 },
+    { id: "10", title: "Love Comes, Love Goes (stripped)", file: "/music/10-love-comes-love-goes-stripped.mp3", cover: "/images/musings.jpg", duration: 154 },
+    { id: "11", title: "Love Comes, Love Goes (stripped + slowed + reverb)", file: "/music/11-love-comes-love-goes-stripped-slowed-reverb.mp3", cover: "/images/musings.jpg", duration: 181 },
   ],
 };
 
