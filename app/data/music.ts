@@ -7,6 +7,7 @@ export type Track = {
   duration: number;
   cover: string;
   artist: string;
+  album?: string; // NEW
 };
 
 export type Release = {
@@ -27,13 +28,15 @@ export const artist = {
 
 // Helper to ensure each track has cover + artist
 const withDefaults = (
-  tracks: Array<Omit<Track, "cover" | "artist"> & Partial<Pick<Track, "cover" | "artist">>>,
-  releaseCover: string
+  tracks: Array<Omit<Track, "cover" | "artist" | "album"> & Partial<Pick<Track, "cover" | "artist">>>,
+  releaseCover: string,
+  releaseTitle: string
 ): Track[] =>
   tracks.map((t) => ({
     ...t,
     cover: t.cover ?? releaseCover ?? "/images/default-cover.jpg",
     artist: t.artist ?? artist.name,
+    album: releaseTitle, // NEW
   }));
 
 export const latestRelease: Release = {
@@ -43,9 +46,11 @@ export const latestRelease: Release = {
   type: "Single",
   slug: "healing-hurts",
   artist: "David",
-  tracks: withDefaults([
-    { id: "healing-hurts", title: "Healing Hurts", file: "/music/healing-hurts.mp3", duration: 208 },
-  ], "/images/healing-hurts.jpg"),
+  tracks: withDefaults(
+  [{ id: "healing-hurts", title: "Healing Hurts", file: "/music/healing-hurts.mp3", duration: 208 }],
+  "/images/healing-hurts.jpg",
+  "Healing Hurts"
+),
 };
 
 export const musingsAlbum: Release = {
@@ -67,7 +72,10 @@ export const musingsAlbum: Release = {
     { id: 9, title: "Musings (slowed + reverb)", file: "/music/09-musings-slowed-reverb.mp3", duration: 241 },
     { id: 10, title: "Love Comes, Love Goes (stripped)", file: "/music/10-love-comes-love-goes-stripped.mp3", duration: 154 },
     { id: 11, title: "Love Comes, Love Goes (stripped + slowed + reverb)", file: "/music/11-love-comes-love-goes-stripped-slowed-reverb.mp3", duration: 181 },
-  ], "/images/musings.jpg"),
+  ],
+  "/images/musings.jpg",
+  "Musings"
+),
 };
 
 export const didYou: Release = {
@@ -79,7 +87,10 @@ export const didYou: Release = {
   artist: "David",
   tracks: withDefaults([
     { id: "did-you", title: "Did You?", file: "/music/did-you.mp3", duration: 165 },
-  ], "/images/did-you.jpg"),
+  ],
+  "/images/did-you.jpg",
+  "Did You?"
+),
 };
 
 export const rud1: Release = {
@@ -91,7 +102,9 @@ export const rud1: Release = {
   artist: "David",
   tracks: withDefaults([
     { id: "rud1", title: "R-U-D-1?", file: "/music/rud1.mp3", duration: 238 },
-  ], "/images/rud1.jpg"),
+  ], "/images/rud1.jpg",
+"R-U-D-1?"
+),
 };
 
 export const discography = [latestRelease, rud1, didYou, musingsAlbum];

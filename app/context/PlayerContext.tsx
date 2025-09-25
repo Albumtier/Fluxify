@@ -1,6 +1,13 @@
 "use client";
 
-import { createContext, useContext, useState, useRef, useEffect, ReactNode } from "react";
+import {
+  createContext,
+  useContext,
+  useState,
+  useRef,
+  useEffect,
+  ReactNode,
+} from "react";
 import type { Track } from "@/app/data/music";
 
 type PlayerContextType = {
@@ -18,9 +25,8 @@ type PlayerContextType = {
   jumpToTrack: (trackId: string) => void;
   getPopularTracks: (allTracks: Track[], top?: number) => Track[];
   playCounts: Record<string, number>;
-  audioRef: React.RefObject<HTMLAudioElement | null>; // ✅ allow null
+  audioRef: React.RefObject<HTMLAudioElement | null>;
 };
-
 
 const PlayerContext = createContext<PlayerContextType | undefined>(undefined);
 
@@ -35,41 +41,69 @@ export function PlayerProvider({ children }: { children: ReactNode }) {
 
   const audioRef = useRef<HTMLAudioElement | null>(null);
 
+  // toggle play/pause
   const togglePlay = () => {
     if (!audioRef.current) return;
-    if (isPlaying) audioRef.current.pause();
-    else audioRef.current.play();
-    setIsPlaying(!isPlaying);
+    if (isPlaying) {
+      audioRef.current.pause();
+      setIsPlaying(false);
+    } else {
+      audioRef.current.play();
+      setIsPlaying(true);
+    }
   };
 
+  // play a track (with optional album/playlist queue)
   const playTrack = (track: Track, albumQueue?: Track[]) => {
-  // Ensure cover and artist are always strings
-  const trackWithCover: Track = {
-    ...track,
-    cover: track.cover ?? currentTrack?.cover ?? "/images/default-cover.jpg",
-    artist: track.artist ?? "David",
+    const trackWithCover: Track = {
+      ...track,
+      cover: track.cover ?? currentTrack?.cover ?? "/images/default-cover.jpg",
+      artist: track.artist ?? "David",
+    };
+
+    setPlayCounts((prev) => ({
+      ...prev,
+      [track.id]: (prev[track.id] || 0) + 1,
+    }));
+
+    // same track → toggle instead of reload
+    if (currentTrack?.id === track.id) {
+      togglePlay();
+      return;
+    }
+
+    if (currentTrack) setHistory((prev) => [...prev, currentTrack]);
+
+    if (albumQueue && albumQueue.length > 0) {
+      // set full queue, keeping clicked track first
+      const idx = albumQueue.findIndex((t) => t.id === track.id);
+      const reordered = [
+        albumQueue[idx], // clicked track
+        ...albumQueue.slice(idx + 1), // tracks after it
+        ...albumQueue.slice(0, idx),  // tracks before it
+      ];
+      setCurrentTrack(trackWithCover);
+      setQueue(reordered.slice(1)); // everything else
+    } else {
+      setCurrentTrack(trackWithCover);
+      setQueue([]);
+    }
+
+    setIsPlaying(true);
+    setCurrentTime(0);
   };
 
-  setPlayCounts((prev) => ({ ...prev, [track.id]: (prev[track.id] || 0) + 1 }));
-
-  if (currentTrack?.id === track.id) {
-    togglePlay();
-    return;
-  }
-
-  if (currentTrack) setHistory((prev) => [...prev, currentTrack]);
-  setCurrentTrack(trackWithCover);
-};
-
-
+  // play all (album/playlist from start)
   const playAll = (tracks: Track[]) => {
     if (!tracks.length) return;
     if (currentTrack) setHistory((prev) => [...prev, currentTrack]);
     setCurrentTrack(tracks[0]);
     setQueue(tracks.slice(1));
     setIsPlaying(true);
+    setCurrentTime(0);
   };
 
+  // play next
   const playNext = () => {
     if (!currentTrack || !queue.length) {
       setIsPlaying(false);
@@ -80,9 +114,11 @@ export function PlayerProvider({ children }: { children: ReactNode }) {
     setCurrentTrack(next);
     setQueue(queue.slice(1));
     setIsPlaying(true);
+    setCurrentTime(0);
     if (audioRef.current) audioRef.current.src = next.file;
   };
 
+  // play previous
   const playPrevious = () => {
     if (!history.length) return;
     const prevTrack = history[history.length - 1];
@@ -90,9 +126,11 @@ export function PlayerProvider({ children }: { children: ReactNode }) {
     if (currentTrack) setQueue((prev) => [currentTrack, ...prev]);
     setCurrentTrack(prevTrack);
     setIsPlaying(true);
+    setCurrentTime(0);
     if (audioRef.current) audioRef.current.src = prevTrack.file;
   };
 
+  // jump to a specific track in queue
   const jumpToTrack = (trackId: string) => {
     const idx = queue.findIndex((t) => t.id === trackId);
     if (idx < 0) return;
@@ -101,24 +139,30 @@ export function PlayerProvider({ children }: { children: ReactNode }) {
     setCurrentTrack(selected);
     setQueue(queue.slice(idx + 1));
     setIsPlaying(true);
+    setCurrentTime(0);
     if (audioRef.current) audioRef.current.src = selected.file;
   };
 
+  // return popular tracks
   const getPopularTracks = (allTracks: Track[], top = 4) => {
     return [...allTracks]
       .sort((a, b) => (playCounts[b.id] || 0) - (playCounts[a.id] || 0))
       .slice(0, top);
   };
 
+  // attach audio events
   useEffect(() => {
+    if (!audioRef.current) return;
+
     const audio = audioRef.current;
-    if (!audio || !currentTrack) return;
 
-    audio.src = currentTrack.file;
-    audio.play();
-    setIsPlaying(true);
+    if (currentTrack) {
+      audio.src = currentTrack.file;
+      audio.play();
+      setIsPlaying(true);
+    }
 
-    const onMetadata = () => setDuration(audio.duration);
+    const onMetadata = () => setDuration(audio.duration || 0);
     const onTimeUpdate = () => setCurrentTime(audio.currentTime);
     const onEnded = () => playNext();
 
@@ -131,7 +175,7 @@ export function PlayerProvider({ children }: { children: ReactNode }) {
       audio.removeEventListener("timeupdate", onTimeUpdate);
       audio.removeEventListener("ended", onEnded);
     };
-  }, [currentTrack, queue]);
+  }, [currentTrack]);
 
   return (
     <PlayerContext.Provider
@@ -154,7 +198,7 @@ export function PlayerProvider({ children }: { children: ReactNode }) {
       }}
     >
       {children}
-      <audio ref={audioRef} className="hidden" autoPlay />
+      <audio ref={audioRef} className="hidden" />
     </PlayerContext.Provider>
   );
 }
