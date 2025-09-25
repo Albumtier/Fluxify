@@ -25,7 +25,10 @@ export const artist = {
 };
 
 // Helper to ensure each track has cover + artist
-const withDefaults = (tracks: Omit<Track, "cover" | "artist">[], releaseCover: string): Track[] =>
+const withDefaults = (
+  tracks: Array<Omit<Track, "cover" | "artist"> & Partial<Pick<Track, "cover" | "artist">>>,
+  releaseCover: string
+): Track[] =>
   tracks.map((t) => ({
     ...t,
     cover: t.cover ?? releaseCover ?? "/images/default-cover.jpg",

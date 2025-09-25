@@ -46,8 +46,8 @@ export function PlayerProvider({ children }: { children: ReactNode }) {
   // Ensure cover and artist are always strings
   const trackWithCover: Track = {
     ...track,
-    cover: track.cover || currentTrack?.cover || "/images/default-cover.jpg",
-    artist: track.artist || "David",
+    cover: track.cover ?? currentTrack?.cover ?? "/images/default-cover.jpg",
+    artist: track.artist ?? "David",
   };
 
   setPlayCounts((prev) => ({ ...prev, [track.id]: (prev[track.id] || 0) + 1 }));
