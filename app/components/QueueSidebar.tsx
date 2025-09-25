@@ -53,7 +53,7 @@ export default function QueueSidebar({ onClose }: { onClose: () => void }) {
           {upNext.map((track) => (
             <div
               key={track.id}
-              onClick={() => jumpToTrack(track.id)}
+              onClick={() => jumpToTrack(track.id.tostring())}
               className="flex items-center gap-2 px-4 py-2 cursor-pointer hover:bg-gray-700 rounded mb-1"
             >
               <Image
