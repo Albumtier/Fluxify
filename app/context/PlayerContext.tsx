@@ -18,8 +18,9 @@ type PlayerContextType = {
   jumpToTrack: (trackId: string) => void;
   getPopularTracks: (allTracks: Track[], top?: number) => Track[];
   playCounts: Record<string, number>;
-  audioRef: React.RefObject<HTMLAudioElement>;
+  audioRef: React.RefObject<HTMLAudioElement | null>; // ✅ allow null
 };
+
 
 const PlayerContext = createContext<PlayerContextType | undefined>(undefined);
 
@@ -42,7 +43,7 @@ export function PlayerProvider({ children }: { children: ReactNode }) {
   };
 
   const playTrack = (track: Track, albumQueue?: Track[]) => {
-  // Ensure cover is always a string
+  // Ensure cover and artist are always strings
   const trackWithCover: Track = {
     ...track,
     cover: track.cover || currentTrack?.cover || "/images/default-cover.jpg",
@@ -57,7 +58,7 @@ export function PlayerProvider({ children }: { children: ReactNode }) {
   }
 
   if (currentTrack) setHistory((prev) => [...prev, currentTrack]);
-  setCurrentTrack(trackWithCover); // ✅ now TS is happy
+  setCurrentTrack(trackWithCover);
 };
 
 
