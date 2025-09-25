@@ -1,5 +1,14 @@
 // app/data/music.ts
 
+// Define Track type
+export type Track = {
+  id: string | number;
+  title: string;
+  file: string;
+  cover: string;
+  duration?: number; // duration in seconds
+};
+
 export const artist = {
   name: "David",
   image: "/images/artist.jpg", // place this in public/images/artist.jpg
