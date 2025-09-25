@@ -19,8 +19,8 @@ export default function MobilePlayerBar() {
         className="rounded object-cover flex-shrink-0"
       />
       <div className="flex flex-col justify-center overflow-hidden">
-        <span className="truncate font-semibold">{currentTrack.title}</span>
-        <span className="truncate text-gray-400 text-sm">David</span>
+        <span className="truncate font-semibold text-white">{currentTrack.title}</span>
+        <span className="truncate text-gray-300 text-sm">David</span>
       </div>
       <button
         className="ml-auto p-3 bg-pink-600 rounded-full text-white"
