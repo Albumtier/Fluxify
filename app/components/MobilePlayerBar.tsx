@@ -20,7 +20,7 @@ export default function MobilePlayerBar() {
       />
       <div className="flex flex-col justify-center overflow-hidden">
         <span className="truncate font-semibold">{currentTrack.title}</span>
-        <span className="truncate text-gray-400 text-sm">{currentTrack.artist || "David"}</span>
+        <span className="truncate text-gray-400 text-sm">David</span>
       </div>
       <button
         className="ml-auto p-3 bg-pink-600 rounded-full text-white"
