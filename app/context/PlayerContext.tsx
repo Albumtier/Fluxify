@@ -42,26 +42,24 @@ export function PlayerProvider({ children }: { children: ReactNode }) {
   };
 
   const playTrack = (track: Track, albumQueue?: Track[]) => {
-    const trackWithCover = { ...track, cover: track.cover || currentTrack?.cover };
-    setPlayCounts((prev) => ({ ...prev, [track.id]: (prev[track.id] || 0) + 1 }));
-
-    if (currentTrack?.id === track.id) {
-      togglePlay();
-      return;
-    }
-
-    if (currentTrack) setHistory((prev) => [...prev, currentTrack]);
-    setCurrentTrack(trackWithCover);
-
-    if (albumQueue && albumQueue.length) {
-      const idx = albumQueue.findIndex((t) => t.id === track.id);
-      setQueue(albumQueue.slice(idx + 1));
-    } else {
-      setQueue([]);
-    }
-
-    setIsPlaying(true);
+  // Ensure cover is always a string
+  const trackWithCover: Track = {
+    ...track,
+    cover: track.cover || currentTrack?.cover || "/images/default-cover.jpg",
+    artist: track.artist || "David",
   };
+
+  setPlayCounts((prev) => ({ ...prev, [track.id]: (prev[track.id] || 0) + 1 }));
+
+  if (currentTrack?.id === track.id) {
+    togglePlay();
+    return;
+  }
+
+  if (currentTrack) setHistory((prev) => [...prev, currentTrack]);
+  setCurrentTrack(trackWithCover); // ✅ now TS is happy
+};
+
 
   const playAll = (tracks: Track[]) => {
     if (!tracks.length) return;
