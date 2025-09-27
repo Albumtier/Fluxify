@@ -40,16 +40,16 @@ const withDefaults = (
   }));
 
 export const latestRelease: Release = {
-  title: "Healing Hurts",
-  cover: "/images/healing-hurts.jpg",
+  title: "Comment Tu T'appelles",
+  cover: "/images/comment.jpg",
   year: 2025,
   type: "Single",
-  slug: "healing-hurts",
+  slug: "comment-tu-tappelles",
   artist: "David",
   tracks: withDefaults(
-  [{ id: "healing-hurts", title: "Healing Hurts", file: "/music/healing-hurts.mp3", duration: 208 }],
-  "/images/healing-hurts.jpg",
-  "Healing Hurts"
+  [{ id: "commentTu", title: "Comment Tu T'appelles", file: "/music/comment.mp3", duration: 175 }],
+  "/images/comment.jpg",
+  "Comment Tu T'appelles?"
 ),
 };
 
@@ -107,7 +107,22 @@ export const rud1: Release = {
 ),
 };
 
-export const discography = [latestRelease, rud1, didYou, musingsAlbum];
+export const healing-hurts: Release = {
+  title: "Healing Hurts",
+  cover: "/images/healing-hurts.jpg",
+  year: 2025,
+  type: "Single",
+  slug: "healing-hurts",
+  artist: "David",
+  tracks: withDefaults([
+    { id: "healing-hurts", title: "Healing Hurts", file: "/music/healing-hurts.mp3", duration: 208 },
+  ],
+  "/images/healing-hurts.jpg",
+  "Healing Hurts"
+),
+};
+
+export const discography = [latestRelease, healing-hurts, rud1, didYou, musingsAlbum];
 
 // Popular tracks
 export const popularTracks = [
