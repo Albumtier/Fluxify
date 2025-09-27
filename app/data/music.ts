@@ -107,7 +107,7 @@ export const rud1: Release = {
 ),
 };
 
-export const healing-hurts: Release = {
+export const healingHurts: Release = {
   title: "Healing Hurts",
   cover: "/images/healing-hurts.jpg",
   year: 2025,
@@ -115,14 +115,14 @@ export const healing-hurts: Release = {
   slug: "healing-hurts",
   artist: "David",
   tracks: withDefaults([
-    { id: "healing-hurts", title: "Healing Hurts", file: "/music/healing-hurts.mp3", duration: 208 },
+    { id: "healingHurts", title: "Healing Hurts", file: "/music/healing-hurts.mp3", duration: 208 },
   ],
   "/images/healing-hurts.jpg",
   "Healing Hurts"
 ),
 };
 
-export const discography = [latestRelease, healing-hurts, rud1, didYou, musingsAlbum];
+export const discography = [latestRelease, healingHurts, rud1, didYou, musingsAlbum];
 
 // Popular tracks
 export const popularTracks = [
