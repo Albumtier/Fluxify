@@ -47,7 +47,7 @@ export const latestRelease: Release = {
   slug: "comment-tu-tappelles",
   artist: "David",
   tracks: withDefaults(
-  [{ id: "commentTu", title: "Comment Tu T'appelles", file: "/music/comment.mp3", duration: 175 }],
+  [{ id: "commentTu", title: "Comment Tu T'appelles", file: "/music/commentTu.mp3", duration: 175 }],
   "/images/comment.jpg",
   "Comment Tu T'appelles?"
 ),
