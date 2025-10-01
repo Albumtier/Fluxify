@@ -4,6 +4,7 @@ import "./globals.css";
 import { PlayerProvider } from "./context/PlayerContext";
 import PlayerBar from "./components/PlayerBar";
 import MobilePlayerBar from "./components/MobilePlayerBar";
+import { Analytics } from "@vercel/analytics/next"
 
 const geistSans = Geist({ variable: "--font-geist-sans", subsets: ["latin"] });
 const geistMono = Geist_Mono({ variable: "--font-geist-mono", subsets: ["latin"] });
