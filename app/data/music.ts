@@ -40,16 +40,16 @@ const withDefaults = (
   }));
 
 export const latestRelease: Release = {
-  title: "Comment Tu T'appelles",
-  cover: "/images/comment.jpg",
+  title: "SMLTIWHTAF",
+  cover: "/images/s.jpg",
   year: 2025,
   type: "Single",
-  slug: "comment-tu-tappelles",
+  slug: "smltiwhtaf",
   artist: "David",
   tracks: withDefaults(
-  [{ id: "commentTu", title: "Comment Tu T'appelles", file: "/music/commentTu.mp3", duration: 175 }],
-  "/images/comment.jpg",
-  "Comment Tu T'appelles?"
+  [{ id: "smltiwhtaf", title: "SMLTIWHTAF", file: "/music/SMLTIWHTAF.mp3", duration: 238 }],
+  "/images/s.jpg",
+  "SMLTIWHTAF"
 ),
 };
 
@@ -122,7 +122,22 @@ export const healingHurts: Release = {
 ),
 };
 
-export const discography = [latestRelease, healingHurts, rud1, didYou, musingsAlbum];
+export const commentTu: Release = {
+  title: "Comment Tu T'appelles?",
+  cover: "/images/comment.jpg",
+  year: 2025,
+  type: "Single",
+  slug: "comment-tu-tappelles",
+  artist: "David",
+  tracks: withDefaults([
+    { id: "commentTu", title: "Comment Tu T'appelles?", file: "/music/commentTu.mp3", duration: 175 },
+  ],
+  "/images/comment.jpg",
+  "Comment Tu T'appelles?"
+),
+};
+
+export const discography = [latestRelease, commentTu, healingHurts, rud1, didYou, musingsAlbum];
 
 // Popular tracks
 export const popularTracks = [
