@@ -23,6 +23,7 @@ type PlayerContextType = {
   playNext: () => void;
   playPrevious: () => void;
   jumpToTrack: (trackId: string) => void;
+  addToQueue: (track: Track) => void; // NEW
   getPopularTracks: (allTracks: Track[], top?: number) => Track[];
   playCounts: Record<string, number>;
   audioRef: React.RefObject<HTMLAudioElement | null>;
@@ -80,10 +81,10 @@ export function PlayerProvider({ children }: { children: ReactNode }) {
       const reordered = [
         albumQueue[idx], // clicked track
         ...albumQueue.slice(idx + 1), // tracks after it
-        ...albumQueue.slice(0, idx),  // tracks before it
+        ...albumQueue.slice(0, idx), // tracks before it
       ];
       setCurrentTrack(trackWithCover);
-      setQueue(reordered.slice(1)); // everything else
+      setQueue(reordered.slice(1));
     } else {
       setCurrentTrack(trackWithCover);
       setQueue([]);
@@ -101,6 +102,28 @@ export function PlayerProvider({ children }: { children: ReactNode }) {
     setQueue(tracks.slice(1));
     setIsPlaying(true);
     setCurrentTime(0);
+  };
+
+  // NEW: add a track to the queue
+  const addToQueue = (track: Track) => {
+    const trackWithCover: Track = {
+      ...track,
+      cover: track.cover ?? currentTrack?.cover ?? "/images/default-cover.jpg",
+      artist: track.artist ?? "David",
+    };
+
+    // if player is empty → start playing immediately
+    if (!currentTrack) {
+      setCurrentTrack(trackWithCover);
+      setIsPlaying(true);
+      return;
+    }
+
+    // prevent duplicates
+    const exists = queue.some((t) => t.id === track.id);
+    if (!exists) {
+      setQueue((prev) => [...prev, trackWithCover]);
+    }
   };
 
   // play next
@@ -192,6 +215,7 @@ export function PlayerProvider({ children }: { children: ReactNode }) {
         playNext,
         playPrevious,
         jumpToTrack,
+        addToQueue, // NEW
         getPopularTracks,
         playCounts,
         audioRef,

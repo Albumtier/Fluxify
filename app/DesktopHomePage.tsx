@@ -7,7 +7,7 @@ import { latestRelease, discography, allTracks, artist } from "./data/music";
 import { FastAverageColor } from "fast-average-color";
 
 export default function HomePage() {
-  const { playTrack, currentTrack, isPlaying, getPopularTracks } = usePlayer();
+  const { playTrack, addToQueue, currentTrack, isPlaying, getPopularTracks } = usePlayer();
   const popularTracks = getPopularTracks(allTracks, 4);
   const [artistColor, setArtistColor] = useState("#000");
 
@@ -50,12 +50,20 @@ export default function HomePage() {
             />
             <div>
               <h3 className="text-2xl font-bold">{latestRelease.title}</h3>
-              <button
-                onClick={() => playTrack(latestRelease.tracks[0], latestRelease.tracks)}
-                className="mt-4 p-3 bg-pink-600 text-white rounded-xl hover:bg-pink-700 text-xl"
-              >
-                {isPlaying && currentTrack?.id === latestRelease.tracks[0].id ? "❚❚" : "▶"}
-              </button>
+              <div className="mt-4 flex gap-2">
+                <button
+                  onClick={() => playTrack(latestRelease.tracks[0], latestRelease.tracks)}
+                  className="p-3 bg-pink-600 text-white rounded-xl hover:bg-pink-700 text-xl"
+                >
+                  {isPlaying && currentTrack?.id === latestRelease.tracks[0].id ? "❚❚" : "▶"}
+                </button>
+                <button
+                  onClick={() => latestRelease.tracks.forEach(track => addToQueue(track))}
+                  className="p-3 bg-gray-700 text-white rounded-xl hover:bg-gray-600 text-xl"
+                >
+                  +
+                </button>
+              </div>
             </div>
           </div>
         </section>
@@ -79,12 +87,20 @@ export default function HomePage() {
                   />
                   <span>{track.title}</span>
                 </div>
-                <button
-                  onClick={() => playTrack(track)}
-                  className="px-4 py-1 bg-pink-600 text-white rounded hover:bg-pink-700 text-xl"
-                >
-                  {isPlaying && currentTrack?.id === track.id ? "❚❚" : "▶"}
-                </button>
+                <div className="flex gap-2">
+                  <button
+                    onClick={() => playTrack(track)}
+                    className="px-4 py-1 bg-pink-600 text-white rounded hover:bg-pink-700 text-xl"
+                  >
+                    {isPlaying && currentTrack?.id === track.id ? "❚❚" : "▶"}
+                  </button>
+                  <button
+                    onClick={() => addToQueue(track)}
+                    className="px-4 py-1 bg-gray-700 text-white rounded hover:bg-gray-600 text-xl"
+                  >
+                    +
+                  </button>
+                </div>
               </li>
             ))}
           </ul>
@@ -107,7 +123,7 @@ export default function HomePage() {
 
 // Card component for each release with color highlight
 function DiscographyCard({ release }: { release: any }) {
-  const { playTrack } = usePlayer();
+  const { playTrack, addToQueue } = usePlayer();
   const [bgColor, setBgColor] = useState("#000");
 
   useEffect(() => {
@@ -118,7 +134,7 @@ function DiscographyCard({ release }: { release: any }) {
   }, [release.cover]);
 
   return (
-    <div className="space-y-2">
+    <div className="space-y-2 relative">
       <div className="relative w-full group rounded-xl overflow-hidden" style={{ background: bgColor }}>
         <a href={`/releases/${release.slug}`} className="block w-full h-full">
           <Image
@@ -129,12 +145,20 @@ function DiscographyCard({ release }: { release: any }) {
             className="object-cover w-full h-full transition-transform duration-200 group-hover:scale-105 rounded-xl"
           />
         </a>
-        <button
-          onClick={() => playTrack(release.tracks[0], release.tracks)}
-          className="absolute bottom-2 right-2 opacity-0 group-hover:opacity-100 transition-opacity bg-pink-600 rounded-full p-2 text-white"
-        >
-          ▶
-        </button>
+        <div className="absolute bottom-2 right-2 flex gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
+          <button
+            onClick={() => playTrack(release.tracks[0], release.tracks)}
+            className="bg-pink-600 rounded-full p-2 text-white"
+          >
+            ▶
+          </button>
+          <button
+            onClick={() => release.tracks.forEach(track => addToQueue(track))}
+            className="bg-gray-700 rounded-full p-2 text-white"
+          >
+            +
+          </button>
+        </div>
       </div>
       <div className="flex flex-col">
         <h3 className="text-xl font-bold truncate">{release.title}</h3>
