@@ -1,5 +1,6 @@
 "use client";
 
+import type { Track } from "./data/music";
 import Image from "next/image";
 import { usePlayer } from "./context/PlayerContext";
 import { latestRelease, discography, artist } from "./data/music";
@@ -67,7 +68,7 @@ export default function MobileHomePage() {
               )}
             </button>
             <button
-              onClick={() => latestRelease.tracks.forEach((track) => addToQueue(track))}
+              onClick={() => latestRelease.tracks.forEach((track: Track) => addToQueue(track))}
               className="p-3 bg-gray-700 rounded-full text-white"
             >
               +
@@ -113,7 +114,7 @@ export default function MobileHomePage() {
                     onClick={(e) => {
                       e.preventDefault();
                       e.stopPropagation();
-                      release.tracks.forEach((track) => addToQueue(track));
+                      release.tracks.forEach((track: Track) => addToQueue(track));
                     }}
                     className="bg-gray-700 p-2 rounded-full text-white"
                   >

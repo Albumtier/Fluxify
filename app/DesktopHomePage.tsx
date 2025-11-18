@@ -1,5 +1,6 @@
 "use client";
 
+import type { Track } from "./data/music";
 import Image from "next/image";
 import { useEffect, useState } from "react";
 import { usePlayer } from "./context/PlayerContext";
@@ -58,7 +59,7 @@ export default function HomePage() {
                   {isPlaying && currentTrack?.id === latestRelease.tracks[0].id ? "❚❚" : "▶"}
                 </button>
                 <button
-                  onClick={() => latestRelease.tracks.forEach(track => addToQueue(track))}
+                  onClick={() => latestRelease.tracks.forEach((track: Track) => addToQueue(track))}
                   className="p-3 bg-gray-700 text-white rounded-xl hover:bg-gray-600 text-xl"
                 >
                   +
@@ -153,7 +154,7 @@ function DiscographyCard({ release }: { release: any }) {
             ▶
           </button>
           <button
-            onClick={() => release.tracks.forEach(track => addToQueue(track))}
+            onClick={() => release.tracks.forEach((track: Track) => addToQueue(track))}
             className="bg-gray-700 rounded-full p-2 text-white"
           >
             +
