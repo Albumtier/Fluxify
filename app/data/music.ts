@@ -40,16 +40,27 @@ const withDefaults = (
   }));
 
 export const latestRelease: Release = {
-  title: "SMLTIWHTAF",
-  cover: "/images/s.jpg",
+  title: "The Healing Experience",
+  cover: "/images/the.png",
   year: 2025,
-  type: "Single",
-  slug: "smltiwhtaf",
+  type: "Album",
+  slug: "the-healing-experience",
   artist: "David",
-  tracks: withDefaults(
-  [{ id: "smltiwhtaf", title: "SMLTIWHTAF", file: "/music/SMLTIWHTAF.mp3", duration: 238 }],
-  "/images/s.jpg",
-  "SMLTIWHTAF"
+  tracks: withDefaults([
+    { id: 1, title: "T.H.E.", file: "/music/the.mp3", duration: 104 },
+    { id: 2, title: "Healing Hurts", file: "/music/healing-hurts.mp3", duration: 208 },
+    { id: 3, title: "R-U-D-1?", file: "/music/rud1.mp3", duration: 238 },
+    { id: 4, title: "SMLTIDHTAF", file: "/music/SMLTIDHTAF.mp3", duration: 238 },
+    { id: 5, title: "CMP", file: "/music/CMP.mp3", duration: 138 },
+    { id: 6, title: "The Decision", file: "/music/the-decision.mp3", duration: 178 },
+    { id: 7, title: "Goodbye", file: "/music/Goodbye.mp3", duration: 217 },
+    { id: 8, title: "Comment Tu T'appelle?", file: "/music/commentTu.mp3", duration: 175 },
+    { id: 9, title: "Did You?", file: "/music/did-you.mp3", duration: 165 },
+    { id: 10, title: "Healing Hurts (AfroHouse Remix)", file: "/music/healing-hurts-rmx.mp3", duration: 201 },
+    { id: 11, title: "AWYDCTLM", file: "/music/AWYDCTLM.mp3", duration: 88 },
+  ],
+  "/images/the.png",
+  "The Healing Experience"
 ),
 };
 
@@ -137,7 +148,22 @@ export const commentTu: Release = {
 ),
 };
 
-export const discography = [latestRelease, commentTu, healingHurts, rud1, didYou, musingsAlbum];
+export const smltidhtaf: Release = {
+  title: "SMLTIDHTAF",
+  cover: "/images/s.jpg",
+  year: 2025,
+  type: "Single",
+  slug: "smltidhtaf",
+  artist: "David",
+  tracks: withDefaults([
+    { id: "slmtidhtaf", title: "SMLTIDHTAF", file: "/music/SMLTIDHTAF.mp3", duration: 238 },
+  ],
+  "/images/s.jpg",
+  "SMLTIDHTAF"
+),
+};
+
+export const discography = [latestRelease, smltidhtaf, commentTu, healingHurts, rud1, didYou, musingsAlbum];
 
 // Popular tracks
 export const popularTracks = [
