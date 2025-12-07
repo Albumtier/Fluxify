@@ -2,27 +2,33 @@
 
 import { usePlayer } from "../context/PlayerContext";
 import Image from "next/image";
-import { FaPlay, FaPause, FaStepForward, FaStepBackward, FaTimes, FaMusic } from "react-icons/fa";
+import {
+  FaPlay,
+  FaPause,
+  FaStepForward,
+  FaStepBackward,
+  FaTimes,
+  FaMusic,
+} from "react-icons/fa";
 import { useEffect, useState } from "react";
-import MobileLyricsPanel from "./MobileLyricsPanel"; // Import lyrics panel
+import MobileLyricsPanel from "./MobileLyricsPanel";
+import { Track } from "@/app/data/music"; // ✅ Use real Track type
 
 interface MobileFullPlayerProps {
-  track: {
-    id: string | number;
-    title: string;
-    cover: string;
-    duration: number;
-    artist: string;
-    album?: string | null;
-  };
+  track: Track;   // ✅ FIXED — use the actual Track type
   isPlaying: boolean;
   onClose: () => void;
 }
 
-export default function MobileFullPlayer({ track, isPlaying, onClose }: MobileFullPlayerProps) {
-  const { currentTrack, playTrack, togglePlay, playNext, playPrevious } = usePlayer();
+export default function MobileFullPlayer({
+  track,
+  isPlaying,
+  onClose,
+}: MobileFullPlayerProps) {
+  const { currentTrack, playTrack, togglePlay, playNext, playPrevious } =
+    usePlayer();
   const [progress, setProgress] = useState(0);
-  const [isLyricsOpen, setIsLyricsOpen] = useState(false); // Lyrics panel state
+  const [isLyricsOpen, setIsLyricsOpen] = useState(false);
 
   // Reset progress when track changes
   useEffect(() => {
@@ -57,7 +63,6 @@ export default function MobileFullPlayer({ track, isPlaying, onClose }: MobileFu
     >
       {/* Top bar */}
       <div className="w-full flex items-center justify-between">
-        {/* Close button */}
         <button
           onClick={onClose}
           className="p-2 text-white rounded-full hover:bg-gray-800"
@@ -65,12 +70,10 @@ export default function MobileFullPlayer({ track, isPlaying, onClose }: MobileFu
           <FaTimes size={20} />
         </button>
 
-        {/* Title */}
         <h1 className="text-lg font-semibold">
           {track.album ? track.album : track.title}
         </h1>
 
-        {/* Lyrics button */}
         <button
           onClick={() => setIsLyricsOpen(true)}
           className="p-3 bg-pink-600 rounded-full text-white text-lg hover:bg-pink-500 transition-colors"
@@ -115,12 +118,20 @@ export default function MobileFullPlayer({ track, isPlaying, onClose }: MobileFu
           <button onClick={playPrevious} className="text-2xl">
             <FaStepBackward />
           </button>
+
           <button
-            onClick={() => (isPlaying ? togglePlay() : currentTrack ? playTrack(currentTrack) : null)}
+            onClick={() =>
+              isPlaying
+                ? togglePlay()
+                : currentTrack
+                ? playTrack(currentTrack)
+                : null
+            }
             className="p-5 bg-pink-600 rounded-full text-3xl"
           >
             {isPlaying ? <FaPause /> : <FaPlay />}
           </button>
+
           <button onClick={playNext} className="text-2xl">
             <FaStepForward />
           </button>
@@ -132,7 +143,7 @@ export default function MobileFullPlayer({ track, isPlaying, onClose }: MobileFu
         <MobileLyricsPanel
           track={track}
           onClose={() => setIsLyricsOpen(false)}
-	  mode="fullplayer"
+          mode="fullplayer"
         />
       )}
     </div>
