@@ -8,8 +8,11 @@ export type Track = {
   cover: string;
   artist: string;
   album?: string;
-  lyricsFile?: string; // NEW
+  lyricsFile?: string; 
 
+  // Add these:
+  dominantColor?: string;
+  dominantTextColor?: string;
 };
 
 export type Release = {
