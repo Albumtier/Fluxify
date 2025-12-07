@@ -1,0 +1,52 @@
+const lyrics = `
+You might be wondereing why 
+I've written this for you
+Well, I wanted to show you
+How much I do feel for you
+Even now when it feels we're through
+
+So close your eyes 
+and lend me your ears
+Let your heart judge
+the truth that my words say
+I cannot tell if you still care
+But, darling, I just can't get you
+Out of my head
+
+Mi o mo
+Boya ki n kan gbagbe wa ah
+Mi o de le so
+Boya mo wa l'okan e ah
+
+No this isn't to make you feel bad
+Or to try to get you to want me now
+I just want you to know I'm sorry that
+I'm still that silence wielding guy
+
+So close your eyes 
+and lend me your ears
+Let your heart judge
+the truth that my words say
+I cannot tell if you still care
+But, darling, I just can't get you
+Out of my head
+
+Mi o mo
+Boya ki n kan gbagbe wa ah
+Mi o de le so
+Boya mo wa l'okan e ah
+
+I have come to accept it
+This can't be what I want it to be
+But I just hope my words
+And actions showed
+That I really wanted to be with you
+
+
+Mi o mo
+Boya ki n kan gbagbe wa ah
+Sugbon mo mo
+Pe o ma r'elomin ta fe e daadaa
+`;
+
+export default lyrics;

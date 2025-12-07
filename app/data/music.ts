@@ -7,7 +7,9 @@ export type Track = {
   duration: number;
   cover: string;
   artist: string;
-  album?: string; // NEW
+  album?: string;
+  lyricsFile?: string; // NEW
+
 };
 
 export type Release = {
@@ -48,16 +50,16 @@ export const latestRelease: Release = {
   artist: "David",
   tracks: withDefaults([
     { id: 1, title: "T.H.E.", file: "/music/the.mp3", duration: 104 },
-    { id: 2, title: "Healing Hurts", file: "/music/healing-hurts.mp3", duration: 208 },
-    { id: 3, title: "R-U-D-1?", file: "/music/rud1.mp3", duration: 238 },
-    { id: 4, title: "SMLTIDHTAF", file: "/music/SMLTIDHTAF.mp3", duration: 238 },
-    { id: 5, title: "CMP", file: "/music/CMP.mp3", duration: 138 },
+    { id: 2, title: "Healing Hurts", file: "/music/healing-hurts.mp3", duration: 208, lyricsFile: "hurts" },
+    { id: 3, title: "R-U-D-1?", file: "/music/rud1.mp3", duration: 238, lyricsFile: "the-one" },
+    { id: 4, title: "SMLTIDHTAF", file: "/music/SMLTIDHTAF.mp3", duration: 238, lyricsFile: "sml" },
+    { id: 5, title: "CMP", file: "/music/CMP.mp3", duration: 138, lyricsFile: "cmp" },
     { id: 6, title: "The Decision", file: "/music/the-decision.mp3", duration: 178 },
-    { id: 7, title: "Goodbye", file: "/music/Goodbye.mp3", duration: 217 },
-    { id: 8, title: "Comment Tu T'appelle?", file: "/music/commentTu.mp3", duration: 175 },
-    { id: 9, title: "Did You?", file: "/music/did-you.mp3", duration: 165 },
+    { id: 7, title: "Goodbye", file: "/music/Goodbye.mp3", duration: 217, lyricsFile: "goodbye" },
+    { id: 8, title: "Comment Tu T'appelle?", file: "/music/commentTu.mp3", duration: 175, lyricsFile: "comment" },
+    { id: 9, title: "Did You?", file: "/music/did-you.mp3", duration: 165, lyricsFile: "did-you" },
     { id: 10, title: "Healing Hurts (AfroHouse Remix)", file: "/music/healing-hurts-rmx.mp3", duration: 201 },
-    { id: 11, title: "AWYDCTLM", file: "/music/AWYDCTLM.mp3", duration: 88 },
+    { id: 11, title: "AWYDCTLM", file: "/music/AWYDCTLM.mp3", duration: 88, lyricsFile: "awydctlm" },
   ],
   "/images/the.png",
   "The Healing Experience"
@@ -72,17 +74,17 @@ export const musingsAlbum: Release = {
   slug: "musings",
   artist: "David",
   tracks: withDefaults([
-    { id: 1, title: "Musings", file: "/music/01-musings.mp3", duration: 209 },
-    { id: 2, title: "Love Comes, Love Goes", file: "/music/02-love-comes-love-goes.mp3", duration: 163 },
-    { id: 3, title: "Let You Go", file: "/music/03-let-you-go.mp3", duration: 144 },
-    { id: 4, title: "I Hope You Know Love", file: "/music/04-i-hope-you-know-love.mp3", duration: 225 },
-    { id: 5, title: "Drowning", file: "/music/05-drowning.mp3", duration: 219 },
-    { id: 6, title: "Get Over You", file: "/music/06-get-over-you.mp3", duration: 195 },
-    { id: 7, title: "Solo Tú", file: "/music/07-solo-tu.mp3", duration: 151 },
-    { id: 8, title: "One Request", file: "/music/08-one-request.mp3", duration: 141 },
-    { id: 9, title: "Musings (slowed + reverb)", file: "/music/09-musings-slowed-reverb.mp3", duration: 241 },
-    { id: 10, title: "Love Comes, Love Goes (stripped)", file: "/music/10-love-comes-love-goes-stripped.mp3", duration: 154 },
-    { id: 11, title: "Love Comes, Love Goes (stripped + slowed + reverb)", file: "/music/11-love-comes-love-goes-stripped-slowed-reverb.mp3", duration: 181 },
+    { id: 1, title: "Musings", file: "/music/01-musings.mp3", duration: 209, lyricsFile: "musings" },
+    { id: 2, title: "Love Comes, Love Goes", file: "/music/02-love-comes-love-goes.mp3", duration: 163, lyricsFile: "love-comes" },
+    { id: 3, title: "Let You Go", file: "/music/03-let-you-go.mp3", duration: 144, lyricsFile: "let-go" },
+    { id: 4, title: "I Hope You Know Love", file: "/music/04-i-hope-you-know-love.mp3", duration: 225, lyricsFile: "hope-you-know" },
+    { id: 5, title: "Drowning", file: "/music/05-drowning.mp3", duration: 219, lyricsFile: "drowning" },
+    { id: 6, title: "Get Over You", file: "/music/06-get-over-you.mp3", duration: 195, lyricsFile: "get-over" },
+    { id: 7, title: "Solo Tú", file: "/music/07-solo-tu.mp3", duration: 151, lyricsFile: "solo" },
+    { id: 8, title: "One Request", file: "/music/08-one-request.mp3", duration: 141, lyricsFile: "request" },
+    { id: 9, title: "Musings (slowed + reverb)", file: "/music/09-musings-slowed-reverb.mp3", duration: 241, lyricsFile: "musings" },
+    { id: 10, title: "Love Comes, Love Goes (stripped)", file: "/music/10-love-comes-love-goes-stripped.mp3", duration: 154, lyricsFile: "love-comes" },
+    { id: 11, title: "Love Comes, Love Goes (stripped + slowed + reverb)", file: "/music/11-love-comes-love-goes-stripped-slowed-reverb.mp3", duration: 181, lyricsFile: "love-comes" },
   ],
   "/images/musings.jpg",
   "Musings"
@@ -97,7 +99,7 @@ export const didYou: Release = {
   slug: "did-you",
   artist: "David",
   tracks: withDefaults([
-    { id: "did-you", title: "Did You?", file: "/music/did-you.mp3", duration: 165 },
+    { id: "did-you", title: "Did You?", file: "/music/did-you.mp3", duration: 165, lyricsFile: "did-you" },
   ],
   "/images/did-you.jpg",
   "Did You?"
@@ -112,7 +114,7 @@ export const rud1: Release = {
   slug: "rud1",
   artist: "David",
   tracks: withDefaults([
-    { id: "rud1", title: "R-U-D-1?", file: "/music/rud1.mp3", duration: 238 },
+    { id: "rud1", title: "R-U-D-1?", file: "/music/rud1.mp3", duration: 238, lyricsFile: "the-one" },
   ], "/images/rud1.jpg",
 "R-U-D-1?"
 ),
@@ -126,7 +128,7 @@ export const healingHurts: Release = {
   slug: "healing-hurts",
   artist: "David",
   tracks: withDefaults([
-    { id: "healingHurts", title: "Healing Hurts", file: "/music/healing-hurts.mp3", duration: 208 },
+    { id: "healingHurts", title: "Healing Hurts", file: "/music/healing-hurts.mp3", duration: 208, lyricsFile: "hurts" },
   ],
   "/images/healing-hurts.jpg",
   "Healing Hurts"
@@ -141,7 +143,7 @@ export const commentTu: Release = {
   slug: "comment-tu-tappelles",
   artist: "David",
   tracks: withDefaults([
-    { id: "commentTu", title: "Comment Tu T'appelles?", file: "/music/commentTu.mp3", duration: 175 },
+    { id: "commentTu", title: "Comment Tu T'appelles?", file: "/music/commentTu.mp3", duration: 175, lyricsFile: "comment" },
   ],
   "/images/comment.jpg",
   "Comment Tu T'appelles?"
@@ -156,7 +158,7 @@ export const smltidhtaf: Release = {
   slug: "smltidhtaf",
   artist: "David",
   tracks: withDefaults([
-    { id: "slmtidhtaf", title: "SMLTIDHTAF", file: "/music/SMLTIDHTAF.mp3", duration: 238 },
+    { id: "slmtidhtaf", title: "SMLTIDHTAF", file: "/music/SMLTIDHTAF.mp3", duration: 238, lyricsFile: "sml" },
   ],
   "/images/s.jpg",
   "SMLTIDHTAF"

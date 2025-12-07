@@ -2,8 +2,9 @@
 
 import { usePlayer } from "../context/PlayerContext";
 import Image from "next/image";
-import { FaPlay, FaPause, FaStepForward, FaStepBackward, FaTimes } from "react-icons/fa";
+import { FaPlay, FaPause, FaStepForward, FaStepBackward, FaTimes, FaMusic } from "react-icons/fa";
 import { useEffect, useState } from "react";
+import MobileLyricsPanel from "./MobileLyricsPanel"; // Import lyrics panel
 
 interface MobileFullPlayerProps {
   track: {
@@ -12,7 +13,7 @@ interface MobileFullPlayerProps {
     cover: string;
     duration: number;
     artist: string;
-    album?: string | null; // album can be null
+    album?: string | null;
   };
   isPlaying: boolean;
   onClose: () => void;
@@ -21,6 +22,7 @@ interface MobileFullPlayerProps {
 export default function MobileFullPlayer({ track, isPlaying, onClose }: MobileFullPlayerProps) {
   const { currentTrack, playTrack, togglePlay, playNext, playPrevious } = usePlayer();
   const [progress, setProgress] = useState(0);
+  const [isLyricsOpen, setIsLyricsOpen] = useState(false); // Lyrics panel state
 
   // Reset progress when track changes
   useEffect(() => {
@@ -55,16 +57,26 @@ export default function MobileFullPlayer({ track, isPlaying, onClose }: MobileFu
     >
       {/* Top bar */}
       <div className="w-full flex items-center justify-between">
+        {/* Close button */}
         <button
           onClick={onClose}
           className="p-2 text-white rounded-full hover:bg-gray-800"
         >
           <FaTimes size={20} />
         </button>
+
+        {/* Title */}
         <h1 className="text-lg font-semibold">
           {track.album ? track.album : track.title}
         </h1>
-        <div className="w-8" /> {/* spacer */}
+
+        {/* Lyrics button */}
+        <button
+          onClick={() => setIsLyricsOpen(true)}
+          className="p-3 bg-pink-600 rounded-full text-white text-lg hover:bg-pink-500 transition-colors"
+        >
+          <FaMusic size={20} />
+        </button>
       </div>
 
       {/* Album cover */}
@@ -114,6 +126,15 @@ export default function MobileFullPlayer({ track, isPlaying, onClose }: MobileFu
           </button>
         </div>
       </div>
+
+      {/* Lyrics Panel */}
+      {isLyricsOpen && (
+        <MobileLyricsPanel
+          track={track}
+          onClose={() => setIsLyricsOpen(false)}
+	  mode="fullplayer"
+        />
+      )}
     </div>
   );
 }

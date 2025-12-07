@@ -44,7 +44,7 @@ export default function MobileHomePage() {
       {/* Latest Release */}
       <section>
         <h2 className="text-2xl font-semibold mb-4">Latest Release</h2>
-        <div className="flex items-center space-x-3">
+        <div className="flex flex-col sm:flex-row sm:items-center gap-2">
           <Image
             src={latestRelease.cover}
             alt={latestRelease.title}
@@ -52,13 +52,17 @@ export default function MobileHomePage() {
             height={100}
             className="rounded-xl object-cover flex-shrink-0"
           />
-          <div className="flex flex-col justify-center">
+
+          <div className="flex-1 flex flex-col justify-center">
             <h3 className="text-xl font-bold truncate">{latestRelease.title}</h3>
             <span className="text-gray-400 text-sm">{latestRelease.type}</span>
           </div>
-          <div className="ml-auto flex gap-2">
+
+          <div className="flex gap-2 mt-2 sm:mt-0 sm:ml-auto">
             <button
-              onClick={() => playTrack(latestRelease.tracks[0], latestRelease.tracks)}
+              onClick={() =>
+                playTrack(latestRelease.tracks[0], latestRelease.tracks)
+              }
               className="p-3 bg-pink-600 rounded-full text-white"
             >
               {isPlaying && currentTrack?.id === latestRelease.tracks[0].id ? (
@@ -68,7 +72,9 @@ export default function MobileHomePage() {
               )}
             </button>
             <button
-              onClick={() => latestRelease.tracks.forEach((track: Track) => addToQueue(track))}
+              onClick={() =>
+                latestRelease.tracks.forEach((track: Track) => addToQueue(track))
+              }
               className="p-3 bg-gray-700 rounded-full text-white"
             >
               +
@@ -94,6 +100,7 @@ export default function MobileHomePage() {
                   height={140}
                   className="rounded-xl object-cover w-full h-full"
                 />
+
                 {/* Play + Add buttons overlay */}
                 <div className="absolute bottom-2 right-2 flex gap-2 z-10">
                   <button
@@ -123,6 +130,7 @@ export default function MobileHomePage() {
                 </div>
               </a>
 
+              {/* Title + type */}
               <div className="mt-2 text-center">
                 <h3 className="text-sm font-bold truncate">{release.title}</h3>
                 <span className="text-gray-400 text-xs">{release.type}</span>

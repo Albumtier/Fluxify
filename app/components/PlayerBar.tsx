@@ -2,9 +2,10 @@
 
 import { useState, useEffect, useRef } from "react";
 import Image from "next/image";
-import { FaPlay, FaPause, FaForward, FaBackward, FaList } from "react-icons/fa";
+import { FaPlay, FaPause, FaForward, FaBackward, FaList, FaMusic } from "react-icons/fa";
 import { usePlayer } from "@/app/context/PlayerContext";
 import QueueSidebar from "./QueueSidebar";
+import LyricsPanel from "./LyricsPanel";
 
 function formatTime(seconds: number) {
   const mins = Math.floor(seconds / 60);
@@ -24,6 +25,8 @@ export default function PlayerBar() {
   } = usePlayer();
 
   const [queueOpen, setQueueOpen] = useState(false);
+  const [lyricsOpen, setLyricsOpen] = useState(false);
+
   const titleContainerRef = useRef<HTMLDivElement | null>(null);
   const titleTextRef = useRef<HTMLDivElement | null>(null);
 
@@ -57,7 +60,8 @@ export default function PlayerBar() {
   return (
     <>
       <div className="fixed bottom-0 left-0 right-0 bg-gray-900 text-white flex items-center justify-between px-4 py-3 shadow-lg z-50 h-24">
-        {/* Left: Cover + Info */}
+        
+        {/* LEFT */}
         <div className="flex items-center gap-3 min-w-[200px]">
           <Image
             src={cover}
@@ -67,10 +71,7 @@ export default function PlayerBar() {
             className="rounded-lg object-cover"
           />
           <div className="flex flex-col overflow-hidden w-[140px]">
-            <div
-              ref={titleContainerRef}
-              className="whitespace-nowrap overflow-hidden"
-            >
+            <div ref={titleContainerRef} className="whitespace-nowrap overflow-hidden">
               <div
                 ref={titleTextRef}
                 className="inline-block"
@@ -88,38 +89,28 @@ export default function PlayerBar() {
                 {currentTrack.title}
               </div>
             </div>
-            <span className="text-gray-300 text-sm truncate">David</span>
+            <span className="text-gray-300 text-sm truncate">
+              {currentTrack.artist || "Unknown Artist"}
+            </span>
           </div>
         </div>
 
-        {/* Center: Controls + Progress */}
+        {/* CENTER CONTROLS */}
         <div className="flex flex-col items-center flex-1 mx-8">
           <div className="flex items-center gap-4 mb-2">
-            <button
-              onClick={playPrevious}
-              className="p-2 bg-pink-600 rounded-full hover:bg-pink-700"
-            >
+            <button onClick={playPrevious} className="p-2 bg-pink-600 rounded-full hover:bg-pink-700">
               <FaBackward />
             </button>
-            <button
-              onClick={togglePlay}
-              className="p-3 bg-pink-600 rounded-full hover:bg-pink-700"
-            >
+            <button onClick={togglePlay} className="p-3 bg-pink-600 rounded-full hover:bg-pink-700">
               {isPlaying ? <FaPause size={20} /> : <FaPlay size={20} />}
             </button>
-            <button
-              onClick={playNext}
-              className="p-2 bg-pink-600 rounded-full hover:bg-pink-700"
-            >
+            <button onClick={playNext} className="p-2 bg-pink-600 rounded-full hover:bg-pink-700">
               <FaForward />
             </button>
           </div>
           <div className="w-full">
             <div className="w-full h-1 bg-gray-700 rounded">
-              <div
-                className="h-1 bg-pink-600 rounded"
-                style={{ width: `${progressPercent}%` }}
-              />
+              <div className="h-1 bg-pink-600 rounded" style={{ width: `${progressPercent}%` }} />
             </div>
             <div className="flex justify-between text-xs text-gray-300 mt-1">
               <span>{formatTime(currentTime)}</span>
@@ -128,8 +119,17 @@ export default function PlayerBar() {
           </div>
         </div>
 
-        {/* Right: Queue */}
+        {/* RIGHT BUTTONS */}
         <div className="flex items-center gap-2">
+          {/* Lyrics toggle */}
+          <button
+            onClick={() => setLyricsOpen(!lyricsOpen)}
+            className="p-2 bg-pink-600 rounded-full hover:bg-pink-700"
+          >
+            <FaMusic />
+          </button>
+
+          {/* Queue toggle */}
           <button
             onClick={() => setQueueOpen(!queueOpen)}
             className="p-2 bg-pink-600 rounded-full hover:bg-pink-700"
@@ -140,15 +140,12 @@ export default function PlayerBar() {
       </div>
 
       {queueOpen && <QueueSidebar onClose={() => setQueueOpen(false)} />}
+      {lyricsOpen && <LyricsPanel track={currentTrack} onClose={() => setLyricsOpen(false)} fontclass="font-geist-mono text-xl" />}
 
       <style jsx>{`
         @keyframes scrollText {
-          0% {
-            transform: translateX(0%);
-          }
-          100% {
-            transform: translateX(-100%);
-          }
+          0% { transform: translateX(0%); }
+          100% { transform: translateX(-100%); }
         }
       `}</style>
     </>

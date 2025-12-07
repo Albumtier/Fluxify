@@ -1,0 +1,48 @@
+const lyrics = `
+Oooouuu, baby
+Time after time
+My mind wanders wild
+Thinking of all the ways
+That I've been blind
+
+Cos I saw all the signs
+But I paid no mind
+To what my head had to say
+I chose to follow my heart
+
+So tell me, 
+why did you do me wrong, my dear?
+What did you stand to gain, ma chère?
+I gave you tender loving care
+And you repaid by disappearing
+I was so deep in love with you
+My days revolved all around you
+All of the things you asked of me
+Girl, I did it all for you
+
+So I'm saying goodbye to you
+For all you put me through
+I spent all my love on you
+And you took me for a fool
+
+But that is on you
+I did what I could
+And now I'm moving on from you
+
+I'm saying goodbye to you for good
+Baby
+
+Goodbye to you
+For all you put me through
+I spent all my love on you
+And you took me for a fool
+
+But that is on you
+I did what I could
+And now I'm moving on from you
+
+I'm saying goodbye to you for good
+Baby
+`;
+
+export default lyrics;

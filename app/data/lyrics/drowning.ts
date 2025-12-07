@@ -1,0 +1,67 @@
+const lyrics = `
+It's day one hundred and five
+Since you walked right out my life
+It came as a bad surprise
+'Cos I did everything you asked
+
+You told me that you needed time, 
+but that you would be mine
+And in my arms is where you'd end up 
+at the end of the night
+So tell me why your broken promises 
+are all I have
+You've spun my world off its axis
+
+I waited for you like you asked me to
+With hope in my heart and nothing to lose
+I put all my trust in every word you said
+But now you're with him, 
+and I'm drowning instead
+
+It's day three hundred sixty five
+Been a year since you left me out to dry
+I still can't believe that you lied
+'Cos I did everything you asked
+
+You told me that you needed time, 
+but that you would be mine
+And in my arms is where you'd end up 
+at the end of the night
+So tell me why your broken promises 
+are all I have
+You've spun my world off its axis
+
+I waited for you like you asked me to
+With hope in my heart and nothing to lose
+I put all my trust in every word you said
+But now you're with him, 
+and I'm drowning instead
+
+I waited for you like you asked me to
+With hope in my heart and nothing to lose
+I put all my trust in every word you said
+But now you're with him, 
+and I'm drowning instead
+
+I put you on a pedestal 
+You kicked me down, ripped out my heart
+You sold me lies, you played a fast one on me
+and I fell so hard.
+You left a hole inside my heart
+Now sadness is pulling me down
+Into despair
+
+I waited for you like you asked me to
+With hope in my heart and nothing to lose
+I put all my trust in every word you said
+But now you're with him, 
+and I'm drowning instead
+
+I waited for you like you asked me to
+With hope in my heart and nothing to lose
+I put all my trust in every word you said
+But now you're with him, 
+and I'm drowning instead
+`;
+
+export default lyrics;
