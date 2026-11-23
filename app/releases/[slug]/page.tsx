@@ -1,17 +1,46 @@
-"use client";
-import { useState, useEffect } from "react";
-import DesktopReleasePage from "./DesktopReleasePage";
-import MobileReleasePage from "./MobileReleasePage";
+import type { Metadata } from "next";
+import { discography } from "../../data/music";
+import ReleasePageClient from "./ReleasePageClient";
 
-export default function ReleasePageWrapper() {
-  const [isMobile, setIsMobile] = useState(false);
+type ReleasePageProps = {
+  params: Promise<{ slug: string }> | { slug: string };
+};
 
-  useEffect(() => {
-    const checkMobile = () => setIsMobile(window.innerWidth <= 768);
-    checkMobile();
-    window.addEventListener("resize", checkMobile);
-    return () => window.removeEventListener("resize", checkMobile);
-  }, []);
+function resolveSlug(params: ReleasePageProps["params"]) {
+  return params instanceof Promise ? params.then((value) => value.slug) : params.slug;
+}
 
-  return isMobile ? <MobileReleasePage /> : <DesktopReleasePage />;
+export async function generateMetadata({ params }: ReleasePageProps): Promise<Metadata> {
+  const slug = await resolveSlug(params);
+  const release = discography.find((item) => item.slug === slug);
+
+  if (!release) {
+    return {
+      title: "Fluxify",
+    };
+  }
+
+  return {
+    title: `${release.title} | Fluxify`,
+    openGraph: {
+      title: release.title,
+      images: [
+        {
+          url: release.cover,
+          width: 1200,
+          height: 1200,
+          alt: release.title,
+        },
+      ],
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: release.title,
+      images: [release.cover],
+    },
+  };
+}
+
+export default function ReleasePage() {
+  return <ReleasePageClient />;
 }

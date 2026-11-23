@@ -25,6 +25,31 @@ export type Release = {
   artist?: string; // optional
 };
 
+export function getTrackKey(track: Pick<Track, "id" | "file"> | string | number) {
+  if (typeof track === "object") {
+    return track.file || String(track.id);
+  }
+
+  return String(track);
+}
+
+export function getTrackStreamCount(
+  track: Pick<Track, "id" | "file">,
+  playCounts: Record<string, number>
+) {
+  return playCounts[getTrackKey(track)] ?? 0;
+}
+
+export function getReleaseStreamCount(
+  release: Release,
+  playCounts: Record<string, number>
+) {
+  return release.tracks.reduce(
+    (total, track) => total + getTrackStreamCount(track, playCounts),
+    0
+  );
+}
+
 // Default artist
 export const artist = {
   name: "David",
@@ -45,6 +70,30 @@ const withDefaults = (
   }));
 
 export const latestRelease: Release = {
+  title: "Musings (3 step remix)",
+  cover: "/images/3-step.png",
+  year: 2026,
+  type: "Single",
+  slug: "musings-3-step-remix",
+  artist: "David",
+  tracks: withDefaults([
+    { id: "3-step", title: "Musings (3 step remix)", file: "/music/3-step.mp3", duration: 222 },
+  ], "/images/3-step.png", "Musings (3 step remix)"),
+};
+
+export const noBeLamba: Release = {
+  title: "No Be Lamba",
+  cover: "/images/lamba.jpg",
+  year: 2026,
+  type: "Single",
+  slug: "no-be-lamba",
+  artist: "David",
+  tracks: withDefaults([
+    { id: "lamba", title: "No Be Lamba", file: "/music/lamba.mp3", duration: 178, lyricsFile: "lamba" },
+  ], "/images/lamba.jpg", "No Be Lamba"),
+};
+
+export const healingExperience: Release = {
   title: "The Healing Experience",
   cover: "/images/the.png",
   year: 2025,
@@ -168,7 +217,7 @@ export const smltidhtaf: Release = {
 ),
 };
 
-export const discography = [latestRelease, smltidhtaf, commentTu, healingHurts, rud1, didYou, musingsAlbum];
+export const discography = [latestRelease, noBeLamba, healingExperience, smltidhtaf, commentTu, healingHurts, rud1, didYou, musingsAlbum];
 
 // Popular tracks
 export const popularTracks = [
@@ -181,7 +230,38 @@ export const popularTracks = [
 // Flatten all tracks
 export const allTracks = [
   ...latestRelease.tracks,
+  ...noBeLamba.tracks,
+  ...healingExperience.tracks,
   ...musingsAlbum.tracks,
   ...didYou.tracks,
   ...rud1.tracks,
 ];
+
+const featuredTrackTitles = [
+  "Musings",
+  "Goodbye",
+  "Solo Tú",
+  "SMLTIDHTAF",
+  "One Request",
+  "Comment Tu T'appelle?",
+  "Get Over You",
+  "R-U-D-1?",
+  "Did You?",
+  "Drowning",
+  "I Hope You Know Love",
+  "Love Comes, Love Goes (stripped + slowed + reverb)",
+  "The Decision",
+  "Healing Hurts (AfroHouse Remix)",
+  "Musings (3 step remix)",
+  "AWYDCTLM",
+];
+
+export const thisIsDavidPlaylist = {
+  title: "This is David",
+  cover: "/images/playlist.png",
+  slug: "this-is-david",
+  description: "The best tracks, all in one playlist.",
+  tracks: featuredTrackTitles
+    .map((title) => allTracks.find((track) => track.title === title))
+    .filter((track): track is Track => Boolean(track)),
+};

@@ -1,8 +1,8 @@
 "use client";
 
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, type MouseEvent } from "react";
 import Image from "next/image";
-import { FaPlay, FaPause, FaForward, FaBackward, FaList, FaMusic } from "react-icons/fa";
+import { FaPlay, FaPause, FaForward, FaBackward, FaList, FaMusic, FaRandom } from "react-icons/fa";
 import { usePlayer } from "@/app/context/PlayerContext";
 import QueueSidebar from "./QueueSidebar";
 import LyricsPanel from "./LyricsPanel";
@@ -22,6 +22,9 @@ export default function PlayerBar() {
     playPrevious,
     currentTime,
     duration,
+    seekTo,
+    toggleShuffle,
+    shuffleEnabled,
   } = usePlayer();
 
   const [queueOpen, setQueueOpen] = useState(false);
@@ -51,6 +54,12 @@ export default function PlayerBar() {
   }, [currentTrack?.title]);
 
   const handleAnimationEnd = () => setScrolling(false);
+
+  const handleSeek = (event: MouseEvent<HTMLDivElement>) => {
+    const bounds = event.currentTarget.getBoundingClientRect();
+    const ratio = (event.clientX - bounds.left) / bounds.width;
+    seekTo(ratio * duration);
+  };
 
   if (!currentTrack) return null;
 
@@ -98,6 +107,9 @@ export default function PlayerBar() {
         {/* CENTER CONTROLS */}
         <div className="flex flex-col items-center flex-1 mx-8">
           <div className="flex items-center gap-4 mb-2">
+            <button onClick={toggleShuffle} className={`p-2 rounded-full hover:bg-pink-700 ${shuffleEnabled ? "bg-lime-400 text-black" : "bg-pink-600"}`}>
+              <FaRandom />
+            </button>
             <button onClick={playPrevious} className="p-2 bg-pink-600 rounded-full hover:bg-pink-700">
               <FaBackward />
             </button>
@@ -109,7 +121,7 @@ export default function PlayerBar() {
             </button>
           </div>
           <div className="w-full">
-            <div className="w-full h-1 bg-gray-700 rounded">
+            <div className="w-full h-1 bg-gray-700 rounded cursor-pointer overflow-hidden" onClick={handleSeek}>
               <div className="h-1 bg-pink-600 rounded" style={{ width: `${progressPercent}%` }} />
             </div>
             <div className="flex justify-between text-xs text-gray-300 mt-1">

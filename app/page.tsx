@@ -1,18 +1,27 @@
-// app/page.tsx
-"use client";
-import { useState, useEffect } from "react";
-import DesktopHomePage from "./DesktopHomePage";
-import MobileHomePage from "./MobileHomePage";
+import type { Metadata } from "next";
+import { latestRelease } from "./data/music";
+import HomePageClient from "./HomePageClient";
 
-export default function HomePageWrapper() {
-  const [isMobile, setIsMobile] = useState(false);
+export const metadata: Metadata = {
+  title: "Fluxify",
+  openGraph: {
+    title: "Fluxify",
+    images: [
+      {
+        url: "/images/artist.jpg?v=2",
+        width: 1200,
+        height: 1200,
+        alt: "David",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Fluxify",
+    images: ["/images/artist.jpg?v=2"],
+  },
+};
 
-  useEffect(() => {
-    const checkMobile = () => setIsMobile(window.innerWidth <= 768);
-    checkMobile();
-    window.addEventListener("resize", checkMobile);
-    return () => window.removeEventListener("resize", checkMobile);
-  }, []);
-
-  return isMobile ? <MobileHomePage /> : <DesktopHomePage />;
+export default function HomePage() {
+  return <HomePageClient />;
 }

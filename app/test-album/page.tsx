@@ -1,7 +1,7 @@
 "use client";
 
 import { PlayerProvider, usePlayer } from "../context/PlayerContext";
-import { musingsAlbum } from "../data/music";
+import { musingsAlbum, getTrackKey } from "../data/music";
 import { FaPlay, FaPause } from "react-icons/fa";
 import PlayerBar from "../components/PlayerBar";
 
@@ -44,7 +44,7 @@ function AlbumContent() {
         {/* Right: Play All button */}
         <div className="flex-shrink-0 mt-4 md:mt-0">
           <button
-            onClick={() => playAll(musingsAlbum.tracks)}
+            onClick={() => playAll(musingsAlbum.tracks, musingsAlbum.title)}
             className="bg-pink-600 hover:bg-pink-700 text-white p-4 rounded-full"
           >
             <FaPlay size={20} />
@@ -55,12 +55,12 @@ function AlbumContent() {
       {/* Track List */}
       <div className="space-y-2">
         {musingsAlbum.tracks.map((track) => {
-          const isCurrent = currentTrack?.id === track.id;
+          const isCurrent = currentTrack ? getTrackKey(currentTrack) === getTrackKey(track) : false;
           return (
             <div
-              key={track.id}
+              key={track.file}
               className="flex items-center justify-between bg-gray-900 px-4 py-3 rounded-lg hover:bg-gray-800 cursor-pointer"
-              onClick={() => playTrack(track, musingsAlbum.tracks)}
+              onClick={() => playTrack(track, musingsAlbum.tracks, musingsAlbum.title)}
             >
               <span>{track.title}</span>
               <button className="p-2 bg-pink-600 hover:bg-pink-700 rounded-full text-white">

@@ -11,7 +11,26 @@ const geistMono = Geist_Mono({ variable: "--font-geist-mono", subsets: ["latin"]
 
 export const metadata: Metadata = {
   title: "Fluxify",
-  description: "Music streaming platform",
+  metadataBase: new URL("https://fluxifie.vercel.app"),
+  openGraph: {
+    title: "Fluxify",
+    url: "/",
+    siteName: "Fluxify",
+    images: [
+      {
+        url: "/images/artist.jpg",
+        width: 1200,
+        height: 630,
+        alt: "David",
+      },
+    ],
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Fluxify",
+    images: ["/images/artist.jpg"],
+  },
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
