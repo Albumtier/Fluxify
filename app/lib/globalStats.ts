@@ -1,29 +1,25 @@
-import { Redis } from "@upstash/redis";
-
-const PLAY_COUNTS_KEY = "fluxify:playCounts";
-const MONTHLY_LISTENERS_KEY = "fluxify:monthlyListeners";
-const MONTH_MS = 30 * 24 * 60 * 60 * 1000;
+import { createClient } from "@supabase/supabase-js";
 
 type GlobalStats = {
   playCounts: Record<string, number>;
   monthlyListeners: number;
 };
 
-function createRedis() {
-  const url = process.env.UPSTASH_REDIS_REST_URL?.trim();
-  const token = process.env.UPSTASH_REDIS_REST_TOKEN?.trim();
+function createSupabase() {
+  const url = process.env.SUPABASE_URL?.trim() || process.env.NEXT_PUBLIC_SUPABASE_URL?.trim();
+  const key = process.env.SUPABASE_ANON_KEY?.trim() || process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY?.trim();
 
-  if (!url || !token) {
+  if (!url || !key) {
     return null;
   }
 
-  return new Redis({ url, token });
+  return createClient(url, key);
 }
 
 export function hasGlobalStatsStore() {
   return Boolean(
-    process.env.UPSTASH_REDIS_REST_URL?.trim() &&
-    process.env.UPSTASH_REDIS_REST_TOKEN?.trim()
+    (process.env.SUPABASE_URL?.trim() || process.env.NEXT_PUBLIC_SUPABASE_URL?.trim()) &&
+    (process.env.SUPABASE_ANON_KEY?.trim() || process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY?.trim())
   );
 }
 
@@ -34,41 +30,31 @@ function normalizeCounts(counts: Record<string, number> | null | undefined) {
 }
 
 export async function readGlobalStats(): Promise<GlobalStats> {
-  const redis = createRedis();
-  if (!redis) {
+  const supabase = createSupabase();
+  if (!supabase) {
     return { playCounts: {}, monthlyListeners: 0 };
   }
 
-  const [playCountsRaw, monthlyListenersRaw] = await Promise.all([
-    redis.hgetall<Record<string, number>>(PLAY_COUNTS_KEY),
-    redis.zcard(MONTHLY_LISTENERS_KEY),
-  ]);
+  const { data, error } = await supabase.rpc("get_stream_stats");
+  if (error) throw error;
 
   return {
-    playCounts: normalizeCounts(playCountsRaw),
-    monthlyListeners: Number(monthlyListenersRaw) || 0,
+    playCounts: normalizeCounts(data?.playCounts),
+    monthlyListeners: Number(data?.monthlyListeners) || 0,
   };
 }
 
 export async function recordGlobalPlay(trackKey: string, listenerId: string): Promise<GlobalStats> {
-  const redis = createRedis();
-  if (!redis) {
+  const supabase = createSupabase();
+  if (!supabase) {
     return { playCounts: {}, monthlyListeners: 0 };
   }
 
-  const now = Date.now();
-  const cutoff = now - MONTH_MS;
-
-  await redis.hincrby(PLAY_COUNTS_KEY, trackKey, 1);
-  await redis.zremrangebyscore(MONTHLY_LISTENERS_KEY, 0, cutoff);
-
-  const existing = await redis.zscore(MONTHLY_LISTENERS_KEY, listenerId);
-  if (existing === null) {
-    await redis.zadd(MONTHLY_LISTENERS_KEY, {
-      score: now,
-      member: listenerId,
-    });
-  }
+  const { error } = await supabase.rpc("record_track_play", {
+    p_track_key: trackKey,
+    p_listener_id: listenerId,
+  });
+  if (error) throw error;
 
   return readGlobalStats();
 }

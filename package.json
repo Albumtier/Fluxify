@@ -9,8 +9,8 @@
   },
   "dependencies": {
     "@next/eslint-plugin-next": "^16.0.7",
+    "@supabase/supabase-js": "^2.119.2",
     "@types/next": "^9.0.0",
-    "@upstash/redis": "^1.37.0",
     "@vercel/analytics": "^1.5.0",
     "fast-average-color": "^9.5.0",
     "html2canvas": "^1.4.1",
