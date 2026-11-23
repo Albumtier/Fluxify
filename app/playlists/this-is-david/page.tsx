@@ -47,28 +47,21 @@ export default function ThisIsDavidPage() {
   return (
     <div className="min-h-screen bg-black pb-32 text-white">
       <div className="mx-auto max-w-7xl p-4 md:p-8">
-        <Link href="/" className="mb-5 flex items-center gap-2 font-semibold text-white hover:text-pink-500">
-          <FaArrowLeft /> Back
-        </Link>
-
-        <header className="relative mb-10 flex flex-col gap-6 overflow-hidden rounded-[2rem] border border-white/10 p-5 md:p-6 lg:flex-row lg:items-end">
-          <div
-            className="absolute inset-0"
-            style={{ background: `linear-gradient(135deg, ${highlightColor} 0%, rgba(0,0,0,0.95) 65%)`, opacity: 0.95 }}
-          />
-          <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(255,255,255,0.18),transparent_28%)]" />
+        <header className="relative mb-5 hidden h-[420px] overflow-hidden rounded-[1.5rem] border border-white/10 md:block">
           <Image
-            src={thisIsDavidPlaylist.cover}
+            src="/images/PP.png"
             alt={thisIsDavidPlaylist.title}
-            width={300}
-            height={300}
-            className="relative z-10 aspect-square rounded-2xl object-cover shadow-2xl"
+            fill
+            sizes="(min-width: 768px) 1150px"
+            priority
+            className="object-cover object-[50%_25%]"
           />
-          <div className="relative z-10 min-w-0 pb-1">
-            <p className="text-sm uppercase tracking-[0.3em] text-white/75">Public Playlist</p>
-            <h1 className="mb-2 mt-2 text-4xl font-black md:text-6xl">{thisIsDavidPlaylist.title}</h1>
-            <p className="mb-4 text-base text-white/80">This is David. The best tracks, all in one playlist.</p>
-            <div className="flex flex-wrap items-center gap-2 text-sm text-white/85">
+          <div className="absolute inset-0 bg-gradient-to-t from-black/95 via-black/35 to-black/5" />
+          <div className="absolute bottom-8 left-8 right-8 z-10">
+            <p className="text-sm uppercase tracking-[0.25em] text-white/80">Public Playlist</p>
+            <h1 className="mt-2 text-6xl font-black leading-none">{thisIsDavidPlaylist.title}</h1>
+            <p className="mt-4 text-base text-white/85">This is David. The best tracks, all in one playlist.</p>
+            <div className="mt-3 flex flex-wrap items-center gap-2 text-sm text-white/85">
               <Image src="/favicon.ico" alt="Fluxify" width={28} height={28} className="rounded-sm" />
               <span className="font-semibold">Fluxify</span>
               <span>• {isSaved ? "1 save" : "0 saves"}</span>
@@ -76,7 +69,38 @@ export default function ThisIsDavidPage() {
               <span>• {formatDuration(totalDuration)}</span>
             </div>
           </div>
-          <div className="relative z-10 ml-auto flex items-center gap-3">
+        </header>
+
+        <header className="relative mb-4 h-[380px] overflow-hidden rounded-[1.5rem] border border-white/10 md:hidden">
+          <Image
+            src="/images/PP.png"
+            alt={thisIsDavidPlaylist.title}
+            fill
+            sizes="100vw"
+            priority
+            className="object-cover object-[50%_25%]"
+          />
+          <div className="absolute inset-0 bg-gradient-to-t from-black/95 via-black/20 to-black/10" />
+          <Link href="/" className="absolute left-4 top-4 z-20 flex h-11 w-11 items-center justify-center rounded-full bg-black/45 text-white">
+            <FaArrowLeft />
+          </Link>
+          <div className="absolute bottom-6 left-5 right-5 z-10">
+            <h1 className="text-4xl font-black leading-[0.92]">{thisIsDavidPlaylist.title}</h1>
+          </div>
+        </header>
+
+        <div className="mb-5 md:hidden">
+          <p className="text-base leading-6 text-white/85">This is David. The best tracks, all in one playlist.</p>
+          <div className="mt-3 flex flex-wrap items-center gap-2 text-sm text-white/85">
+            <Image src="/favicon.ico" alt="Fluxify" width={24} height={24} className="rounded-sm" />
+            <span className="font-semibold">Fluxify</span>
+            <span>• {isSaved ? "1 save" : "0 saves"}</span>
+            <span>• {thisIsDavidPlaylist.tracks.length} songs</span>
+            <span>• {formatDuration(totalDuration)}</span>
+          </div>
+        </div>
+
+        <div className="mb-5 flex items-center gap-3">
             <button
               onClick={() => {
                 const nextSaved = !isSaved;
@@ -106,7 +130,6 @@ export default function ThisIsDavidPage() {
               <FaRandom />
             </button>
           </div>
-        </header>
 
         <section className="rounded-[1.75rem] border border-white/10 bg-white/5 p-3 md:p-5">
           <div className="mb-3 grid grid-cols-[2rem_minmax(0,1fr)_4rem_2rem] items-center gap-3 px-3 text-xs uppercase tracking-[0.2em] text-white/45 md:grid-cols-[2rem_minmax(0,1fr)_minmax(10rem,14rem)_2rem_6rem]">
