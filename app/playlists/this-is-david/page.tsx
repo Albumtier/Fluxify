@@ -57,6 +57,13 @@ export default function ThisIsDavidPage() {
             className="object-cover object-[50%_25%]"
           />
           <div className="absolute inset-0 bg-gradient-to-t from-black/95 via-black/35 to-black/5" />
+          <Link
+            href="/"
+            className="absolute left-6 top-6 z-20 hidden items-center gap-2 rounded-full bg-black/45 px-4 py-2 text-sm font-semibold text-white backdrop-blur transition hover:bg-black/65 md:flex"
+          >
+            <FaArrowLeft />
+            Back
+          </Link>
           <div className="absolute bottom-8 left-8 right-8 z-10">
             <p className="text-sm uppercase tracking-[0.25em] text-white/80">Public Playlist</p>
             <h1 className="mt-2 text-6xl font-black leading-none">{thisIsDavidPlaylist.title}</h1>

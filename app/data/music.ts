@@ -19,7 +19,7 @@ export type Release = {
   title: string;
   cover: string;
   year: number;
-  type: "Single" | "Album";
+  type: "Single" | "Album" | "EP";
   slug: string;
   tracks: Track[];
   artist?: string; // optional
@@ -70,6 +70,22 @@ const withDefaults = (
   }));
 
 export const latestRelease: Release = {
+  title: "These Words Came From A Different Place",
+  cover: "/images/TWCFADP.png",
+  year: 2026,
+  type: "EP",
+  slug: "these-words-came-from-a-different-place",
+  artist: "David",
+  tracks: withDefaults([
+    { id: "if-love-was-a-crime", title: "If Love Was A Crime", file: "/music/If-Love-Was-A-Crime.mp3", duration: 91 },
+    { id: "if-you-were-a-god", title: "If You Were A God", file: "/music/If-You-Were-A-God.mp3", duration: 121 },
+    { id: "if-i-were-a-scientist", title: "If I Were A Scientist", file: "/music/If-I-Were-A-Scientist.mp3", duration: 92 },
+    { id: "one-way-road", title: "One Way Road", file: "/music/one-way-road.mp3", duration: 65 },
+    { id: "dear-future-wife", title: "Dear Future Wife", file: "/music/dear-future-wife.mp3", duration: 100 },
+  ], "/images/TWCFADP.png", "These Words Came From A Different Place"),
+};
+
+export const musingsThreeStep: Release = {
   title: "Musings (3 step remix)",
   cover: "/images/3-step.png",
   year: 2026,
@@ -217,19 +233,20 @@ export const smltidhtaf: Release = {
 ),
 };
 
-export const discography = [latestRelease, noBeLamba, healingExperience, smltidhtaf, commentTu, healingHurts, rud1, didYou, musingsAlbum];
+export const discography = [latestRelease, musingsThreeStep, noBeLamba, healingExperience, smltidhtaf, commentTu, healingHurts, rud1, didYou, musingsAlbum];
 
 // Popular tracks
 export const popularTracks = [
   musingsAlbum.tracks[1],
   musingsAlbum.tracks[2],
   musingsAlbum.tracks[4],
-  latestRelease.tracks[0],
+  musingsThreeStep.tracks[0],
 ];
 
 // Flatten all tracks
 export const allTracks = [
   ...latestRelease.tracks,
+  ...musingsThreeStep.tracks,
   ...noBeLamba.tracks,
   ...healingExperience.tracks,
   ...musingsAlbum.tracks,
@@ -242,7 +259,9 @@ const featuredTrackTitles = [
   "Goodbye",
   "Solo Tú",
   "SMLTIDHTAF",
+  "One Way Road",
   "One Request",
+  "If I Were A Scientist",
   "Comment Tu T'appelle?",
   "Get Over You",
   "R-U-D-1?",
@@ -253,6 +272,7 @@ const featuredTrackTitles = [
   "The Decision",
   "Healing Hurts (AfroHouse Remix)",
   "Musings (3 step remix)",
+  "Dear Future Wife",
   "AWYDCTLM",
 ];
 

@@ -230,7 +230,7 @@ export default function HomePage() {
             />
             <div className="min-w-0">
               <p className="truncate text-xl font-bold">{latestRelease.title}</p>
-              <p className="mt-1 text-lg text-white/70">ENJOY!!!</p>
+              <p className="mt-1 text-lg text-white/70">These words came from a different place. I hope you enjoy.</p>
             </div>
             <button
               type="button"
@@ -520,7 +520,7 @@ function getReleasesForTab(tab: "Popular releases" | "Albums" | "Singles and EPs
   }
 
   if (tab === "Singles and EPs") {
-    return discography.filter((release) => release.type === "Single");
+    return discography.filter((release) => release.type === "Single" || release.type === "EP");
   }
 
   return [latestRelease, ...discography.filter((release) => release.slug !== latestRelease.slug)];
